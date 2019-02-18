@@ -1,0 +1,8 @@
+.DS_Store
+.allure
+.gradle
+.idea
+allure-results
+build
+out
+jenkins/jenkins_home/
