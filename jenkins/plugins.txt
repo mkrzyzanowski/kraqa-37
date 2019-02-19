@@ -1,5 +1,6 @@
 workflow-aggregator:latest
 blueocean:latest
 job-dsl:latest
+antisamy-markup-formatter:latest
 configuration-as-code:latest
 configuration-as-code-support:latest

@@ -1,0 +1,52 @@
+jenkins:
+  systemMessage: >+
+    <div style="background-color: black; text-align: center;">
+      <img src="http://kraqa.pl/wp-content/themes/kraqa-theme/images/logo.png" style="vertical-align: middle;">
+    </div>
+
+    Jenkins configured automatically with JCasC plugin - all changes need to be entered via jenkins.yaml config file
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  disableRememberMe: false
+  mode: NORMAL
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  numExecutors: 1
+  primaryView:
+    all:
+      name: "all"
+  scmCheckoutRetryCount: 0
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+        - id: "admin"
+          password: "admin"
+  views:
+    - all:
+        name: "All"
+  markupFormatter: rawHtml
+security:
+  remotingCLI:
+    enabled: false
+jobs:
+  - script: >
+      pipelineJob('kraqa-tests') {
+          definition {
+              cpsScm {
+                  scriptPath 'Jenkinsfile'
+                  scm {
+                    git {
+                        remote {
+                            url 'https://github.com/mkrzyzanowski/kraqa-37.git'
+                        }
+                        branch '*/master'
+                        extensions {}
+                    }
+                  }
+              }
+          }
+      }

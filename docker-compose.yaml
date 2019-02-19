@@ -1,0 +1,18 @@
+version: '3'
+services:
+  jenkins:
+    image: mkrzyzanowski/jenkins-kraqa:1.0
+    ports:
+      - 8080:8080
+    volumes:
+      - ./jenkins/jenkins_home:/var/jenkins_home
+      - ./jenkins/jenkins.yaml:/var/jenkins_home/jenkins.yaml
+    environment:
+      - JAVA_OPTS=-Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:;"
+  zalenium:
+    image: dosel/zalenium:latest
+    ports:
+      - 4444:4444
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: 'start --chromeContainers 1'
