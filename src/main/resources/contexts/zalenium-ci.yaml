@@ -1,0 +1,4 @@
+zalenium-ci:
+  webdriver.type: remote
+  webdriver.url: http://zalenium:4444/wd/hub
+  webdriver.cap.browserName: chrome
