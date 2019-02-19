@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+    parameters {
+      choice choices: ['KraQA', 'PTaQ', 'DebatQA'], description: 'What meetup are you on?', name: 'meetup'
+    }
+    stages {
+        stage('Build') {
+            parallel {
+            stage('Build KraQA module') {
+                when {
+                    equals expected: 'KraQA', actual: params.meetup
+                }
+                steps {
+                    echo 'Building KraQA module'
+                }
+            }
+            stage('Build PTaQ module') {
+                when {
+                    equals expected: 'PTaQ', actual: params.meetup
+                }
+                steps {
+                    echo 'Building ptaq module'
+                }
+            }
+            stage('Build All-meetups-united module') {
+                steps {
+                    echo 'Building AMU module'
+                }
+            }
+        }
+        }
+        stage('Deploy') {
+            steps {
+                echo "Deploying"
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing'
+            }
+        }
+        stage('Release') {
+            steps {
+                echo 'Releasing'
+            }
+        }
+    }
+}
